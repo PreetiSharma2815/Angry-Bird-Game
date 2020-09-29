@@ -58,7 +58,7 @@ function setup(){
 }
 
 function draw(){
-    
+    background("lightblue")
     if(backgroundImg){
         background(backgroundImg);
     
