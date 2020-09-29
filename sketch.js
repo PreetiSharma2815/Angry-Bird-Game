@@ -77,6 +77,21 @@ function draw(){
         }
         
     }
+    else{
+        noStroke();
+        textFont("Impact")
+        textSize(20)
+        fill("Red")
+        text("Score : " + score, width-300, 20); 
+        
+        if(birds.length>0){
+            text("Press Space Key for Next Bird", width/2-200, 25); 
+            text("Bird :  "+birds.length,width/2-100, 60)
+        }
+        else{
+            text("Click on 'Reload Button' to reload the Game Level",width/2-200, 70)
+        }
+    }
     
     Engine.update(engine);
     
