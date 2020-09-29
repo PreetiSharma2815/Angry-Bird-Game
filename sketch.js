@@ -140,10 +140,11 @@ function mouseReleased(){
 }
 
 function keyPressed(){
-    if(keyCode === 32 && gameState ==="launched"){
+    if(keyCode === 32 || touches.length > 0) && gameState ==="launched"){
         if(birds.length>=0){            
             slingshot.attach(birds[birds.length-1].body);
             gameState = "onSling";
+            touches=[]
         }
     }
 }
