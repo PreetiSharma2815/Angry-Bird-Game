@@ -58,7 +58,7 @@ function setup(){
 }
 
 function draw(){
-    background("lightblue")
+    
     if(backgroundImg){
         background(backgroundImg);
     
@@ -78,6 +78,7 @@ function draw(){
         
     }
     else{
+        background("lightblue")
         noStroke();
         textFont("Impact")
         textSize(20)
