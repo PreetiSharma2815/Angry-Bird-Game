@@ -4,20 +4,39 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
-var box1, pig1,pig3;
-var backgroundImg,bgImg,platform;
-var bird, slingshot;
 
-var button;
-var gameState = "onSling";
+//game objects
+var box1,box2,box3,box4,box5; 
+var pig1,pig3;
+var log1,log3,log4,log5;
+var bird, slingshot,platform;
+
+//game sounds
+var birdSelectSound,birdFlySound,pigSnortSound;
+
+//background images
+var backgroundImg;
 var bg = "sprites/bg1.png";
+
+
+//games state
+var gameState = "onSling";
+
+//score
 var score = 0;
 
+//birds
 var birds=[];
 
 function preload() {
+
     getBackgroundImg();
     bgImg=loadImage(bg);
+
+    birdFlySound=loadSound("sounds/bird_flying.mp3")
+    pigSnortSound=loadSound("sounds/pig_snort.mp3")
+    birdSelectSound=loadSound("sounds/bird_select.mp3")
+    
 }
 
 function setup(){
@@ -61,7 +80,7 @@ function draw(){
     
     if(backgroundImg){
         background(backgroundImg);
-    
+        
         noStroke();
         textFont("Impact")
         textSize(20)
@@ -78,7 +97,8 @@ function draw(){
         
     }
     else{
-        background(bgImg)
+        //background("lightblue");
+        background(bgImg);
         noStroke();
         textFont("Impact")
         textSize(20)
@@ -92,8 +112,8 @@ function draw(){
         else{
             text("Click on 'Reload Button' to reload the Game Level",width/2-200, 70)
         }
+         
     }
-    
     Engine.update(engine);
     
     box1.display();
@@ -121,8 +141,7 @@ function draw(){
     platform.display();
    
     slingshot.display(); 
-    console.log(gameState)
-    console.log(birds.length-1)
+    
 }
 
 
@@ -130,21 +149,24 @@ function mouseDragged(){
     if (gameState!=="launched"){
         Matter.Body.setPosition(birds[birds.length-1].body, {x: mouseX , y: mouseY});
         Matter.Body.applyForce(birds[birds.length-1].body, birds[birds.length-1].body.position, {x:5,y:-5})
+        birdSelectSound.play()
     }
 }
 
 function mouseReleased(){
     slingshot.fly();
+    birdFlySound.play()
     birds.pop();
     gameState = "launched";
 }
 
 function keyPressed(){
-    if((keyCode === 32 || touches.length > 0) && (gameState ==="launched")){
+    if((keyCode === 32 || touches.length>0) && gameState ==="launched"){
         if(birds.length>=0){            
             slingshot.attach(birds[birds.length-1].body);
-            //touches=[];
+            touches=[]
             gameState = "onSling";
+            birdSelectSound.play()
         }
         
     }
