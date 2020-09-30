@@ -78,7 +78,7 @@ function draw(){
         
     }
     else{
-        background("lightblue")
+        background(bg)
         noStroke();
         textFont("Impact")
         textSize(20)
