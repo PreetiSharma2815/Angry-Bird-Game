@@ -5,7 +5,7 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var box1, pig1,pig3;
-var backgroundImg,platform;
+var backgroundImg,bgImg,platform;
 var bird, slingshot;
 
 var button;
@@ -17,7 +17,7 @@ var birds=[];
 
 function preload() {
     getBackgroundImg();
-    
+    bgImg=loadImage(bg);
 }
 
 function setup(){
@@ -78,7 +78,7 @@ function draw(){
         
     }
     else{
-        background(bg)
+        background(bgImg)
         noStroke();
         textFont("Impact")
         textSize(20)
