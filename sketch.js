@@ -144,8 +144,8 @@ function keyPressed(){
         if(birds.length>=0){            
             slingshot.attach(birds[birds.length-1].body);
             gameState = "onSling";
-            touches=[]
         }
+        touches=[]
     }
 }
 
