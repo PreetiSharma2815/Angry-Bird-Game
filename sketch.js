@@ -90,6 +90,7 @@ function draw(){
         if(birds.length>0){
             text("Press Space Key for Next Bird", width/2-200, 25); 
             text("Bird :  "+birds.length,width/2-100, 60)
+            text("touch :  "+touches.length,width/2-100, 100)
         }
         else{
             text("Click on 'Reload Button' to reload the Game Level",width/2-200, 70)
