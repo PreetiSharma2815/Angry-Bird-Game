@@ -28,6 +28,9 @@ var score = 0;
 //birds
 var birds=[];
 
+//touch variable
+var touch=0;
+
 function preload() {
 
     getBackgroundImg();
@@ -90,7 +93,7 @@ function draw(){
         if(birds.length>0){
             text("Press Space Key for Next Bird", width/2-200, 25); 
             text("Bird :  "+birds.length,width/2-100, 60)
-            text("touches :  "+touches.length,width/2-100, 100)
+           
         }
         else{
             text("Click on 'Reload Button' to reload the Game Level",width/2-200, 70)
@@ -109,7 +112,7 @@ function draw(){
         if(birds.length>0){
             text("Press Space Key for Next Bird", width/2-200, 25); 
             text("Bird :  "+birds.length,width/2-100, 60)
-            text("touches :  "+touches.length,width/2-100, 100)
+            
         }
         else{
             text("Click on 'Reload Button' to reload the Game Level",width/2-200, 70)
@@ -146,36 +149,75 @@ function draw(){
     
 }
 
-
+//pull the bird with the rubber band when mouse is dragged
 function mouseDragged(){
     if (gameState!=="launched"){
         Matter.Body.setPosition(birds[birds.length-1].body, {x: mouseX , y: mouseY});
         Matter.Body.applyForce(birds[birds.length-1].body, birds[birds.length-1].body.position, {x:5,y:-5})
         birdSelectSound.play()
+        return false;
     }
 }
-
+//fly the bird when mouse is released
 function mouseReleased(){
     slingshot.fly();
     birdFlySound.play()
     birds.pop();
     gameState = "launched";
+    return false;
 }
 
+//set next bird when space key is pressed
 function keyPressed(){
-    if((keyCode === 32 || touches.length>0) && gameState ==="launched"){
-        if(birds.length>=0){   
+    if((keyCode === 32) && gameState ==="launched"){
+        if(birds.length>=0 ){   
             Matter.Body.setPosition(birds[birds.length-1].body, {x: 200 , y: 50});         
             slingshot.attach(birds[birds.length-1].body);
-            touches=[]
+            
             gameState = "onSling";
             birdSelectSound.play()
         }
         
     }
+    
 }
 
 
+
+//pull the bird with the rubber band when bird is dragged with the touch
+function touchMoved(){
+    if (gameState!=="launched"){
+        Matter.Body.setPosition(birds[birds.length-1].body, {x: mouseX , y: mouseY});
+        Matter.Body.applyForce(birds[birds.length-1].body, birds[birds.length-1].body.position, {x:5,y:-5})
+        birdSelectSound.play()
+        return false;
+    }
+}
+
+//fly the bird on touch end
+function touchEnded(){
+    touch=2
+    if(touch==2){
+        slingshot.fly();
+        birdFlySound.play()
+        birds.pop();
+        gameState = "launched";
+        return false;
+    }
+    
+
+}
+
+//next bird on touc start
+function touchStarted(){
+    if(birds.length>=0 && gameState ==="launched"){   
+        Matter.Body.setPosition(birds[birds.length-1].body, {x: 200 , y: 50});         
+        slingshot.attach(birds[birds.length-1].body);        
+        gameState = "onSling";
+        touch=1;
+        birdSelectSound.play()
+    }
+}
 async function getBackgroundImg(){
     var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
     var responseJSON = await response.json();
