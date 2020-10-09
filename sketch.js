@@ -28,9 +28,6 @@ var score = 0;
 //birds
 var birds=[];
 
-//touch variable
-var touch=0;
-
 function preload() {
 
     getBackgroundImg();
@@ -183,41 +180,6 @@ function keyPressed(){
 }
 
 
-
-//pull the bird with the rubber band when bird is dragged with the touch
-function touchMoved(){
-    if (gameState!=="launched"){
-        Matter.Body.setPosition(birds[birds.length-1].body, {x: mouseX , y: mouseY});
-        Matter.Body.applyForce(birds[birds.length-1].body, birds[birds.length-1].body.position, {x:5,y:-5})
-        birdSelectSound.play()
-        return false;
-    }
-}
-
-//fly the bird on touch end
-function touchEnded(){
-    touch=2
-    if(touch==2){
-        slingshot.fly();
-        birdFlySound.play()
-        birds.pop();
-        gameState = "launched";
-        return false;
-    }
-    
-
-}
-
-//next bird on touc start
-function touchStarted(){
-    if(birds.length>=0 && gameState ==="launched"){   
-        Matter.Body.setPosition(birds[birds.length-1].body, {x: 200 , y: 50});         
-        slingshot.attach(birds[birds.length-1].body);        
-        gameState = "onSling";
-        touch=1;
-        birdSelectSound.play()
-    }
-}
 async function getBackgroundImg(){
     var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
     var responseJSON = await response.json();
